@@ -10,6 +10,7 @@ class ListUser extends Component {
     };
 
     this.addUser = this.addUser.bind(this);
+    this.editUser = this.editUser.bind(this);
   }
 
   componentDidMount() {
@@ -19,7 +20,11 @@ class ListUser extends Component {
   }
 
   addUser() {
-    this.props.history.push("/add-user");
+    this.props.history.push("/add-user/_add");
+  }
+
+  editUser(userId) {
+    this.props.history.push(`/add-user/${userId}`);
   }
 
   render() {
@@ -52,6 +57,14 @@ class ListUser extends Component {
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
                   <td>{user.email}</td>
+                  <td>
+                    <button
+                      onClick={() => this.editUser(user.userId)}
+                      className="btn btn-info"
+                    >
+                      Update
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
