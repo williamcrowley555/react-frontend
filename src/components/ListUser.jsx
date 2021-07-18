@@ -11,6 +11,8 @@ class ListUser extends Component {
 
     this.addUser = this.addUser.bind(this);
     this.editUser = this.editUser.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
+    this.viewUser = this.viewUser.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +27,18 @@ class ListUser extends Component {
 
   editUser(userId) {
     this.props.history.push(`/add-user/${userId}`);
+  }
+
+  deleteUser(userId) {
+    UserService.deleteUser(userId).then((response) => {
+      this.setState({
+        users: this.state.users.filter((user) => user.userId !== userId),
+      });
+    });
+  }
+
+  viewUser(userId) {
+    this.props.history.push(`/view-user/${userId}`);
   }
 
   render() {
@@ -60,9 +74,23 @@ class ListUser extends Component {
                   <td>
                     <button
                       onClick={() => this.editUser(user.userId)}
-                      className="btn btn-info"
+                      className="btn btn-success"
                     >
                       Update
+                    </button>
+                    <button
+                      onClick={() => this.deleteUser(user.userId)}
+                      className="btn btn-danger"
+                      style={{ marginLeft: "10px" }}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={() => this.viewUser(user.userId)}
+                      className="btn btn-info"
+                      style={{ marginLeft: "10px" }}
+                    >
+                      View
                     </button>
                   </td>
                 </tr>
